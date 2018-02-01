@@ -1,0 +1,14 @@
+{
+  "name": "coding-katas",
+  "version": "1.0.0",
+  "description": "Holidaycheck Coding Katas Environment",
+  "repository": "git@github.com:holidaycheck/coding-katas.git",
+  "license": "MIT",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "jest": "^21.0.1"
+  }
+}

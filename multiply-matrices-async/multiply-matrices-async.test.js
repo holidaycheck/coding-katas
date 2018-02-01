@@ -27,22 +27,24 @@ const multiply = (m1, m2) => {
     );
 }
 
-describe('...', function() {
-    this.slow(1);
+describe('The Matrix Multiplication Module', function() {
+    
+    // Couldn't find an appropriate jest replacement for this, but we'll see the result in ms anyway in the test results
+    //this.slow(1);
 
     it('transpose nxn matrix', function() {
         const m1 = [
             [1,2,3],
             [4,5,6]
         ];
-        const transposedM1 = [
+        const expected = [
             [1,4],
             [2,5],
             [3,6]
         ];
 
-        assert.deepEqual(transpose(m1), transposedM1);
-
+        const actual = transpose(m1);
+        expect(actual).toEqual(expected);
     });
 
     it('multiply 1x2 matrix with 2x2', ()=> {
@@ -60,7 +62,7 @@ describe('...', function() {
         ]
 
         return multiply(m1, m2)
-            .then(resultMatrix => assert.deepEqual(resultMatrix, expected));
+            .then(resultMatrix => expect(resultMatrix).toEqual(expected));
     });
 
     it('multiply 3x2 matrix with 2x2', ()=> {
@@ -82,7 +84,7 @@ describe('...', function() {
         ]
 
         return multiply(m1, m2)
-            .then(resultMatrix => assert.deepEqual(resultMatrix, expected));
+            .then(resultMatrix => expect(resultMatrix).toEqual(expected));
     });
 
     it('multiply 2x3 matrix with 3x2', ()=> {
@@ -103,7 +105,7 @@ describe('...', function() {
         ];
 
         return multiply(m1, m2)
-            .then(resultMatrix => assert.deepEqual(resultMatrix, expected));
+            .then(resultMatrix => expect(resultMatrix).toEqual(expected));
     });
 
     it('multiply 3x4 matrix with 4x2', ()=> {
@@ -127,7 +129,7 @@ describe('...', function() {
         ];
 
         return multiply(m1, m2)
-            .then(resultMatrix => assert.deepEqual(resultMatrix, expected));
+            .then(resultMatrix => expect(resultMatrix).toEqual(expected));
     });
 
     it('multiply 3x4 matrix with 4x3', ()=> {
@@ -151,6 +153,6 @@ describe('...', function() {
         ];
 
         return multiply(m1, m2)
-            .then(resultMatrix => assert.deepEqual(resultMatrix, expected));
+            .then(resultMatrix => expect(resultMatrix).toEqual(expected));
     });
 });
