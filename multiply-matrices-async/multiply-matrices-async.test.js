@@ -1,29 +1,34 @@
-const takeColumn = (arr, colIndex) => arr.map(row => row[colIndex]);
 const appendToArray = (arr, el) => [...arr, el];
+
+const makeBigMatrix = (n, m, value = 1) => new Array(n).fill(1).map(x => new Array(m).fill(value));
+
+// Business Logic for Matrix Goodness
 
 // for the sake of getting the col easier as a row
 const transpose = (m) => {
-    const fn = (acc, _, colIndex) => appendToArray(acc, takeColumn(m, colIndex))
-
-    return m[0].reduce(fn, []);
+    const takeColumn = (arr, colIndex) => arr.map(row => row[colIndex]);
+    return m[0].reduce((acc, _, colIndex) => 
+        appendToArray(acc, takeColumn(m, colIndex)), []);
 }
 
-const calculateCell = (row1, row2) => {
-    return row1.reduce((result, value1, index) =>
-        result + value1*row2[index]
+
+const calculateCell = (row, col) => {
+    return row.reduce((result, value1, index) =>
+        result + value1*col[index]
         , 0);
 }
 
-const calculateCellAsync = (row1, row2) =>
+const calculateCellAsync = (row, col) =>
     // simulate late response from calculating service
-    new Promise((res) => setTimeout(res, 1, calculateCell(row1, row2)));
+    new Promise((res) => setTimeout(res, 1, calculateCell(row, col)));
 
 const multiply = (m1, m2) => {
     const m2T = transpose(m2);
 
+    
     return Promise.all(
-        m1.map(row1 =>
-            Promise.all(m2T.map(row2 => calculateCellAsync(row1, row2))))
+        m1.map(m1row =>
+            Promise.all(m2T.map(m2col => calculateCellAsync(m1row, m2col))))
     );
 }
 
@@ -155,4 +160,5 @@ describe('The Matrix Multiplication Module', function() {
         return multiply(m1, m2)
             .then(resultMatrix => expect(resultMatrix).toEqual(expected));
     });
+
 });
