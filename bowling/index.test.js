@@ -28,32 +28,41 @@ const scoreBowling = require('./index')
 
 describe("Bowling Game", () => {
   it("should score 0 for an empty set of throws", () => {
-    const allThrowsFailed = "0,0 0,0 0,0 0,0 0,0 0,0 0,0 0,0 0,0 0,0";
+    const allThrowsFailed = ["--", "--", "--", "--", "--", "--", "--", "--", "--", "--"];
 
     const result = scoreBowling(allThrowsFailed);
     expect(result).toBe(0)
   });
 
   it("should score 5 if we just have a miss on the first throw and 5 on the second throw", () => {
-    const result = scoreBowling("0,5 0,0 0,0 0,0 0,0 0,0 0,0 0,0 0,0 0,0")
+    const result = scoreBowling(["-5", "--", "--", "--", "--", "--", "--", "--", "--", "--"])
     expect(result).toBe(5)
+  })
+
+  it("should score 5 if we just have a 5 on the first throw and a miss on the second throw", () => {
+    const result = scoreBowling(["5-", "--", "--", "--", "--", "--", "--", "--", "--", "--"])
+    expect(result).toBe(5)
+  })
+
+  it("should score 5 if we have all misses until the final frame, which is a 5 and a miss", () => {
+    const result = scoreBowling(["--", "--", "--", "--", "--", "--", "--", "--", "--", "5-"])
+    expect(result).toBe(5)
+  })
+
+  it("should score 10 if we have a spare in the first throw", () => {
+    const result = scoreBowling(["5/", "--", "--", "--", "--", "--", "--", "--", "--", "--"])
+    expect(result).toBe(10)
   })
 })
 
-
-// I think, transforming the input into an array makes the whole thing easier
-// 5 0 -> 5- 5-
-// 0 5 -> 5- -5
-
-
 // What about?
-frames = [
-  "--",
-  "1-",
-  "-2",
-  "5/",
-  "X",
-  "6-",
-  "8/",
-  "31"  
-]
+// frames = [
+//   "--",
+//   "1-",
+//   "-2",
+//   "5/",
+//   "X",
+//   "6-",
+//   "8/",
+//   "31"
+// ]
